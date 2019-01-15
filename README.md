@@ -66,4 +66,5 @@ Cette fonction permet de seuiller l'image selon le threshold choisi.
 
 # Résultats
 
-Voici un exemple de résultat obtenu sur une image de cellule
+Voici un exemple de résultat obtenu sur une image de cellule : 
+![Cellule](/images/cellules.png)
