@@ -63,3 +63,7 @@ Cette fonction permet de calculer le gradient de l'image d'entrée.
 def seuillage(image, threshold):
 ```
 Cette fonction permet de seuiller l'image selon le threshold choisi.
+
+# Résultats
+
+Voici un exemple de résultat obtenu sur une image de cellule
