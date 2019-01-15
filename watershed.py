@@ -71,11 +71,11 @@ def get_neighbourhood(tab, x, y):
                 n.append([x+i, y+j])
     return n
 
-def seuillage(result, step):
-    for i in range(result.shape[0]):
-        for j in range(result.shape[1]):
-            result[i, j] = int(result[i, j]/step) * step
-    return result
+def seuillage(image, threshold):
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            image[i, j] = int(image[i, j]/threshold) * threshold
+    return image
 
 def watershed(filename, output, seuil):
     current_label = 0
