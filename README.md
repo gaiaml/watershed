@@ -72,9 +72,17 @@ Voici un exemple de résultat obtenu sur une image de cellule :
 ![Cellule-segmentation](/results/cellules/segmentation-out.jpg)
 ![Cellule-lpe](/results/cellules/out.jpg)
 
-Voici un exemple de résultat obtenu sur Lenna (sans seuillage : 
+Voici un exemple de résultat obtenu sur Lenna (sans seuillage) : 
 
-![Cellule](/images/lenna.jpg)
-![Cellule-segmentation](/results/lenna-1/segmentation-out.jpg)
-![Cellule-lpe](/results/lenna-1/out.jpg)
+![lenna-1](/images/lenna.jpg)
+![lenna-1-segmentation](/results/lenna-1/segmentation-out.jpg)
+![lenna-1-lpe](/results/lenna-1/out.jpg)
+
+Voici un exemple de résultat obtenu sur Lenna avec un seuillage de 10 : 
+
+![lenna-10](/images/lenna.jpg)
+![lenna-10-segmentation](/results/lenna-10/segmentation-out.jpg)
+![lenna-10-lpe](/results/lenna-10/out.jpg)
+
+
 
