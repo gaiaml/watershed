@@ -68,7 +68,7 @@ Cette fonction permet de seuiller l'image selon le threshold choisi.
 
 Voici un exemple de résultat obtenu sur une image de cellule : 
 
-![Cellule|150x150](/images/cellules.png)
+![Cellule](/images/cellules.png|width=50)
 ![Cellule-segmentation](/results/cellules/segmentation-out.jpg)
 ![Cellule-lpe](/results/cellules/out.jpg)
 
