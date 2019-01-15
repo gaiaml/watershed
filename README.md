@@ -67,7 +67,14 @@ Cette fonction permet de seuiller l'image selon le threshold choisi.
 # Résultats
 
 Voici un exemple de résultat obtenu sur une image de cellule : 
+
 ![Cellule](/images/cellules.png)
 ![Cellule-segmentation](/results/cellules/segmentation-out.jpg)
 ![Cellule-lpe](/results/cellules/out.jpg)
+
+Voici un exemple de résultat obtenu sur Lenna (sans seuillage : 
+
+![Cellule](/images/lenna.jpg)
+![Cellule-segmentation](/results/lenna-1/segmentation-out.jpg)
+![Cellule-lpe](/results/lenna-1/out.jpg)
 
