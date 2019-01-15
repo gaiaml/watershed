@@ -7,6 +7,7 @@ Le sujet retenu est la segmentation par ligne de partage des eaux. Ce dépôt pr
 Le dépôt contient : 
  - le fichier watershed.py qui contient l'algorithme de la LPE classique
  - un dossier de test qui montre les résultats obtenu.
+ - un dossier images sur lesquelles l'algorithme a été testé
  
  
  ### Documentation scientifique
@@ -52,7 +53,7 @@ Le coeur de l'algorithme est situé dans la fonction "watershed". C'est tout sim
 ```
 def watershed(filename, output, seuil):
 ```
-
+Cette fonction permet le calcul de la ligne de partage des eaux. Elle effectue également la segmentation des régions (attribution aléatoires de couleurs pour chaque label).
 ```
 def sobel(file):
 ```
