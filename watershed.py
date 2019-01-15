@@ -63,14 +63,27 @@ def sobel(file):
             res.putpixel((x, y), (val))
     return np.array(res)
 
+def get_neighbourhood(tab, x, y):
+    n = []
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if x+i >= 0 and (x + i < tab.shape[0]) and (y + j >= 0 and (y + j < tab.shape[1])):
+                n.append([x+i, y+j])
+    return n
 
+def seuillage(result, step):
+    for i in range(result.shape[0]):
+        for j in range(result.shape[1]):
+            result[i, j] = int(result[i, j]/step) * step
+    return result
 
-def watershed(filename, output):
+def watershed(filename, output, seuil):
     current_label = 0
     current_dist = 0
     q = queue.Queue()
 
     imi = sobel(filename)
+    imi = seuillage(imi, seuil)
     imo = np.full(imi.shape, INIT)
     imd = np.full(imi.shape, 0)
 
@@ -87,13 +100,12 @@ def watershed(filename, output):
         for p in index[h]:
             imo[p[0],p[1]] = MASK
             # check neighbourhood
-            for nx in range(p[0]-1,p[0]+1):
-                for ny in range(p[1]-1,p[1]+1):
-                    if(imo[nx,ny] > 0 or imo[nx,ny] == WSHED):
-                        imd[p[0],p[1]] = 1
-                        q.put([p[0],p[1]])
-
-        current_dist=1
+            neigh = get_neighbourhood(imi, p[0], p[1])
+            for n in neigh:
+                if imo[n[0], n[1]] > 0 or imo[n[0], n[1]] == WSHED:
+                    imd[p[0], p[1]] = 1
+            q.put([p[0], p[1]])
+        current_dist = 1
         q.put(fictious_point)
 
         while True:
@@ -105,56 +117,77 @@ def watershed(filename, output):
                     q.put(fictious_point)
                     current_dist = current_dist + 1
                     p = q.get()
-
-            for nx in range(p[0]-1,p[0]+1):
-                for ny in range(p[1]-1,p[1]+1):
-                    if(imd[nx,ny] < current_dist and
-                            (imo[nx, ny ] > 0 or imo[nx, ny] == WSHED)):
-                        if(imo[nx, ny] > 0):
-                           if(imo[p[0], p[1]] == MASK or imo[p[0],p[1]] == WSHED) :
-                               imo[p[0], p[1]] = imo[nx, ny]
-                           elif (imo[p[0], p[1]] != imo[nx, ny]):
-                               imo[p[0], p[1]] = WSHED
-                        elif (imo[p[0], p[1]] == MASK):
-                            imo[p[0], p[1]] = WSHED
-                    elif(imo[nx,ny] == MASK and imd[nx,ny] == 0):
-                        imd[nx,ny] = current_dist +1
-                        q.put([nx,ny])
+            neigh = get_neighbourhood(imi, p[0], p[1])
+            for n in neigh:
+                if(imd[n[0],n[1]] < current_dist and
+                        (imo[n[0], n[1] ] > 0 or imo[n[0], n[1]] == WSHED)):
+                    if(imo[n[0], n[1]] > 0):
+                       if(imo[p[0], p[1]] == MASK or imo[p[0],p[1]] == WSHED) :
+                           imo[p[0], p[1]] = imo[n[0], n[1]]
+                       elif (imo[p[0], p[1]] != imo[n[0], n[1]]):
+                           imo[p[0], p[1]] = WSHED
+                    elif (imo[p[0], p[1]] == MASK):
+                        imo[p[0], p[1]] = WSHED
+                elif(imo[n[0],n[1]] == MASK and imd[n[0],n[1]] == 0):
+                    imd[n[0],n[1]] = current_dist +1
+                    q.put([n[0],n[1]])
 
         for p in index[h]:
             imd[p[0],p[1]] = 0
             if(imo[p[0],p[1]] == MASK):
-                current_label = current_label +1
+                current_label = current_label + 1
                 q.put([p[0], p[1]])
                 imo[p[0],p[1]] = current_label
                 while not q.empty():
                     p2 = q.get()
-                    for nx in range(p2[0] - 1, p2[0] + 1):
-                        for ny in range(p2[1] - 1, p2[1] + 1):
-                            if(imo[nx, ny] == MASK):
-                                q.put([nx,ny])
-                                imo[nx,ny] = current_label
+                    neigh = get_neighbourhood(imi, p2[0], p2[1])
+                    for nb in neigh:
+                        if imo[nb[0], nb[1]] == MASK:
+                            q.put(nb)
+                            imo[nb[0], nb[1]] = current_label
 
-    lpe = Image.new('RGB', (imo.shape[1], imo.shape[0]))
+    fusion = np.array(imo)
+    for i in range(imo.shape[0]):
+        for j in range(imo.shape[1]):
+            value = imo[i, j]
+            if value == WSHED:
+                neighbors = get_neighbourhood(imo, i, j)
+                for n in neighbors:
+                    v = imo[n[0], n[1]]
+                    if v != WSHED:
+                        fusion[i, j] = v
+                        break
+
+    segmentation = Image.new('RGB', (imo.shape[1], imo.shape[0]))
     colors = [0]*(current_label + 1)
     for c in range(len(colors)):
         colors[c] = (randint(100, 200), randint(100, 200), randint(100, 200))
 
     for i in range(imo.shape[1]):
         for j in range(imo.shape[0]):
-
             if imo[j][i] == WSHED:
-                lpe.putpixel((i, j), (0,0,0))
+                segmentation.putpixel((i, j), (0,0,0))
             else:
-                lpe.putpixel((i, j), colors[imo[j][i]])
+                segmentation.putpixel((i, j), colors[imo[j][i]])
 
-    plt.imshow(lpe)
-    plt.show()
 
-    save_image(imi, "gradient.jpg")
-    lpe.save(output)
+    split = np.array(fusion)
+
+    for i in range(split.shape[0]):
+        for j in range(split.shape[1]):
+            neighbors = get_neighbourhood(fusion, i, j)
+            for n in neighbors:
+                if fusion[i,j] < fusion[n[0], n[1]]:
+                    split[i,j] = WSHED
+                    break
+
+    save_image(imi, "gradient-" + output)
+    segmentation.save("segmentation-" + output)
+    scipy.misc.imsave("merge-" + output, fusion)
+    scipy.misc.imsave("separation-" + output, split)
+
 
     return
 
 if __name__ == '__main__':
-    watershed(sys.argv[1], sys.argv[2])
+    watershed(sys.argv[1], sys.argv[2], int(sys.argv[3]))
