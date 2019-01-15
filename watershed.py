@@ -78,6 +78,8 @@ def seuillage(image, threshold):
     return image
 
 def watershed(filename, output, seuil):
+    
+    print("Segmentation en cours...")
     current_label = 0
     current_dist = 0
     q = queue.Queue()
@@ -171,7 +173,7 @@ def watershed(filename, output, seuil):
                 segmentation.putpixel((i, j), colors[imo[j][i]])
 
 
-    split = np.array(fusion)
+    split = np.array(load_image(filename))
 
     for i in range(split.shape[0]):
         for j in range(split.shape[1]):
@@ -183,11 +185,17 @@ def watershed(filename, output, seuil):
 
     save_image(imi, "gradient-" + output)
     segmentation.save("segmentation-" + output)
-    scipy.misc.imsave("merge-" + output, fusion)
-    scipy.misc.imsave("separation-" + output, split)
+    #scipy.misc.imsave("fusion-" + output, fusion)
+    scipy.misc.imsave(output, split)
 
-
+    print("Segmentation terminée !")
     return
 
 if __name__ == '__main__':
-    watershed(sys.argv[1], sys.argv[2], int(sys.argv[3]))
+    threshold = 1
+    if(len(sys.argv) > 2):
+        if(len(sys.argv) == 4):
+            threshold = int(sys.argv[3])
+        watershed(sys.argv[1], sys.argv[2], threshold)
+    else:
+        print("Usage : " + sys.argv[0], "[input_file]", "[output_file]", "[threshold]")
