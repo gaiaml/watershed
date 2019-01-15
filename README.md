@@ -42,5 +42,6 @@ Lorsque la file d'attente est vide, on crée une nouvelle région et on lui asso
 Pour lancer le programme, il suffit simplement de lancer la ligne de commande suivante : 
 ```
 python watershed.py [input_image] [output_image] [seuillage] 
-
 ```
+
+Le seuillage permettra de réduire l'écart d'intensité entre deux pixels. Cela permettra d'avoir moins de régions lors du résultat.
