@@ -35,3 +35,11 @@ Lorsque l'on veut traiter un pixel, nous allons placer ses voisins dans une file
 #### Création d'une région
 
 Lorsque la file d'attente est vide, on crée une nouvelle région et on lui associe le pixel courant. Ensuite, nous ajoutons ses voisins dans la file d'attente et on recommence le traitement en suivant les règles énoncées précédemment. 
+
+
+### Documentation utilisateur
+
+Pour lancer le programme, il suffit simplement de lancer la ligne de commande suivante : 
+'''
+python watershed.py [image_entree] [image_sortie] [seuillage] 
+'''
