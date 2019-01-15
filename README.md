@@ -40,6 +40,7 @@ Lorsque la file d'attente est vide, on crée une nouvelle région et on lui asso
 ### Documentation utilisateur
 
 Pour lancer le programme, il suffit simplement de lancer la ligne de commande suivante : 
-'''
-python watershed.py [image_entree] [image_sortie] [seuillage] 
-'''
+```
+python watershed.py [input_image] [output_image] [seuillage] 
+
+```
