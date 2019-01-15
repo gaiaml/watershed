@@ -12,4 +12,5 @@ Le dépôt contient :
  ### Documentation scientifique
  
  Le principe de base consiste à répresenter une image comme un relief topographique qui servira par la suite, a simuler un écoulement du niveau des eaux. 
+ 
  Les intensités de notre image (en niveau de gris) nous permettent d'obtenir une information "d'altitude". En effet, plus les pixels ont une valeur d'intensité blanche, plus l'altitude sera elevée. 
