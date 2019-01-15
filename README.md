@@ -68,9 +68,7 @@ Cette fonction permet de seuiller l'image selon le threshold choisi.
 
 Voici un exemple de résultat obtenu sur une image de cellule : 
 
-<img src="/images/cellules.png" width="250" height="250" title="Cellule">
-<img src="/results/cellules/segmentation-out.jpg" width="250" height="250" title="Cellule-segmentation">
-<img src="/results/cellules/out.jpg" width="250" height="250" title="Cellule-lpe">
+<img src="/images/cellules.png" width="250" height="250" title="Cellule"><img src="/results/cellules/segmentation-out.jpg" width="250" height="250" title="Cellule-segmentation"><img src="/results/cellules/out.jpg" width="250" height="250" title="Cellule-lpe">
 
 Voici un exemple de résultat obtenu sur Lenna (sans seuillage) : 
 
