@@ -43,5 +43,22 @@ Pour lancer le programme, il suffit simplement de lancer la ligne de commande su
 ```
 python watershed.py [input_image] [output_image] [seuillage] 
 ```
-
 Le seuillage permettra de réduire l'écart d'intensité entre deux pixels. Cela permettra d'avoir moins de régions lors du résultat.
+
+### Documentation technique
+
+Le coeur de l'algorithme est situé dans la fonction "watershed". C'est tout simplement une simple traduction en python du pseudo-code donné dans l'article. Cependant, le calcul du gradient de l'image a été ajouté afin d'obtenir de meilleurs résultats.
+
+```
+def watershed(filename, output, seuil):
+```
+
+```
+def sobel(file):
+```
+Cette fonction permet de calculer le gradient de l'image d'entrée.
+
+```
+def seuillage(image, threshold):
+```
+Cette fonction permet de seuiller l'image selon le threshold choisi.
